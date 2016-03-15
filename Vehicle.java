@@ -66,7 +66,7 @@ public class Vehicle implements Comparable<Vehicle>
 
 	public String toString()
 	{
-		return String.format("Id: %d|YoM: %d", id, yearOfConstruction);
+		return String.format("Id: %d|YoC: %d", id, yearOfConstruction);
 	}
 
 	public int compareTo(Vehicle o)

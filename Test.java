@@ -1,89 +1,70 @@
 package laboratorium.lista3;
 
+import laboratorium.lista3.exceptions.EmptyQueueException;
+import laboratorium.lista3.exceptions.EmptyStackException;
+import laboratorium.lista3.exceptions.FullQueueException;
 import laboratorium.lista3.generics.GenericArrayStack;
 import laboratorium.lista3.generics.GenericLinkedQueue;
+import laboratorium.lista3.generics.GenericQueue;
+import laboratorium.lista3.generics.GenericStack;
 
+/**
+ * 
+ * @author Kacper
+ *
+ */
 public class Test
 {
-	public static void trollTestQueue()
+	public static String testQueueTC(int enqueue, int dequeue, int queueSize)
 	{
-		LinkedQueue queue = new LinkedQueue(3);
-		queue.enqueue(1);
-		queue.enqueue(2);
-		queue.enqueue(3);
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		queue.enqueue(5);
-		queue.enqueue(6);
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		queue.enqueue(5);
-		System.out.println(queue.dequeue());
+		GenericQueue<Vehicle> queue = new GenericLinkedQueue<>(queueSize);
+		for (int i = 0; i < enqueue; i++)
+		{
+			try
+			{
+				queue.enqueue(new Vehicle(i + 1, 1990 + i));
+			}
+			catch (FullQueueException e)
+			{
+				System.out.println("Queue is full!");
+			}
+		}
+		for (int i = 0; i < dequeue; i++)
+		{
+			try
+			{
+				queue.dequeue();
+			}
+			catch (EmptyQueueException e)
+			{
+				System.out.println("Queue is empty!");
+			}
+		}
+		return queue.toString();
 	}
 
-	public static void trollTestGenericQueue()
+	public static String testStackTC(int push, int pop, int stackSize)
 	{
-		GenericLinkedQueue<Vehicle> queue = new GenericLinkedQueue<>(3);
-		queue.enqueue(new Vehicle(1, 2000));
-		queue.enqueue(new Vehicle(2, 2000));
-		queue.enqueue(new Vehicle(3, 2000));
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		queue.enqueue(new Vehicle(4, 2000));
-		queue.enqueue(new Vehicle(5, 2000));
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		System.out.println(queue.dequeue());
-		queue.enqueue(new Vehicle(6, 2000));
-		System.out.println(queue.dequeue());
-	}
-
-	public static void trollTestStack()
-	{
-		ArrayStack stack = new ArrayStack(3);
-		System.out.println("Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(1);
-		System.out.println("Pushed: " + 1 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(2);
-		System.out.println("Pushed: " + 2 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(3);
-		System.out.println("Pushed: " + 3 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(4);
-		System.out.println("Pushed: " + 4 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(5);
-		System.out.println("Pushed: " + 5 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-	}
-
-	public static void trollTestGenericStack()
-	{
-		GenericArrayStack<Integer> stack = new GenericArrayStack<>(3);
-		System.out.println("Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(1);
-		System.out.println("Pushed: " + 1 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(2);
-		System.out.println("Pushed: " + 2 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(3);
-		System.out.println("Pushed: " + 3 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(4);
-		System.out.println("Pushed: " + 4 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		stack.push(5);
-		System.out.println("Pushed: " + 5 + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
-		System.out.println("Zdjêto: " + stack.pop() + "|Size: " + stack.size() + "|Top: " + stack.getTop());
+		GenericStack<Vehicle> stack = new GenericArrayStack<>(stackSize);
+		for (int i = 0; i < push; i++)
+			stack.push(new Vehicle(i + 1, 1990 + i));
+		for (int i = 0; i < pop; i++)
+		{
+			try
+			{
+				stack.pop();
+			}
+			catch (EmptyStackException e)
+			{
+				System.out.println("Stack is empty!");
+			}
+		}
+		return stack.toString();
 	}
 
 	public static void main(String[] args)
 	{
-		trollTestGenericQueue();
+		System.out.println(testStackTC(3, 1, 3));
+		System.out.println(testQueueTC(3, 1, 3));
 	}
-
 }

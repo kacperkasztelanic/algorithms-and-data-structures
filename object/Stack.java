@@ -1,5 +1,10 @@
-package laboratorium.lista3;
+package laboratorium.lista3.object;
 
+/**
+ * 
+ * @author Kacper
+ *
+ */
 public interface Stack
 {
 	void push(Object value);

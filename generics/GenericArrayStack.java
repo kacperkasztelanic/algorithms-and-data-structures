@@ -1,13 +1,19 @@
 package laboratorium.lista3.generics;
 
-import laboratorium.lista3.EmptyStackException;
+import laboratorium.lista3.exceptions.EmptyStackException;
 
+/**
+ * 
+ * @author Kacper
+ *
+ * @param <T>
+ */
 public class GenericArrayStack<T> implements GenericStack<T>
 {
 	private static final int DEFAULT_STACK_SIZE = 10;
 	private T[] array;
 	private int size;
-	private int getTop;
+	private int top;
 
 	public GenericArrayStack()
 	{
@@ -23,43 +29,43 @@ public class GenericArrayStack<T> implements GenericStack<T>
 
 	public void push(T value)
 	{
-		if (getTop + 1 >= array.length)
+		if (top + 1 >= array.length)
 		{
 			array[0] = value;
-			getTop = 0;
+			top = 0;
 		}
 		else
 		{
-			array[getTop + 1] = value;
+			array[top + 1] = value;
 			if (size != array.length)
 				size++;
-			getTop++;
+			top++;
 		}
 	}
 
-	public T pop()
+	public T pop() throws EmptyStackException
 	{
-		if (size <= 0 || getTop == -1)
+		if (size <= 0 || top == -1)
 			throw new EmptyStackException();
-		T value = array[getTop];
-		getTop--;
+		T value = array[top];
+		top--;
 		size--;
-		if (getTop < 0 && size > 0)
-			getTop = array.length - 1;
+		if (top < 0 && size > 0)
+			top = array.length - 1;
 		return value;
 	}
 
-	public T peek()
+	public T peek() throws EmptyStackException
 	{
-		if (getTop < 0)
+		if (top < 0)
 			throw new EmptyStackException();
-		return array[getTop];
+		return array[top];
 	}
 
 	public void clear()
 	{
 		size = 0;
-		getTop = -1;
+		top = -1;
 	}
 
 	public int size()
@@ -74,6 +80,25 @@ public class GenericArrayStack<T> implements GenericStack<T>
 
 	public int getTop()
 	{
-		return getTop;
+		return top;
+	}
+
+	public String toString()
+	{
+		int localSize = size;
+		int localTop = top;
+		StringBuilder sb = new StringBuilder("[");
+		if (!isEmpty())
+		{
+			while (localSize-- > 0)
+			{
+				sb.append(array[localTop--]).append(", ");
+				if (localTop < 0 && localSize > 0)
+					localTop = array.length - 1;
+			}
+			sb.setLength(sb.length() - 2);
+		}
+		sb.append("]").append(" Size: " + size + ", MaxSize: " + array.length);
+		return sb.toString();
 	}
 }

@@ -1,8 +1,14 @@
 package laboratorium.lista3.generics;
 
-import laboratorium.lista3.EmptyQueueException;
-import laboratorium.lista3.FullQueueException;
+import laboratorium.lista3.exceptions.EmptyQueueException;
+import laboratorium.lista3.exceptions.FullQueueException;
 
+/**
+ * 
+ * @author Kacper
+ *
+ * @param <T>
+ */
 public class GenericLinkedQueue<T> implements GenericQueue<T>
 {
 	private static final int DEFAULT_MAX_SIZE = 10;
@@ -21,7 +27,7 @@ public class GenericLinkedQueue<T> implements GenericQueue<T>
 		clear();
 	}
 
-	public void enqueue(T value)
+	public void enqueue(T value) throws FullQueueException
 	{
 		if (size >= maxLength)
 			throw new FullQueueException("Queue is full - max size: " + maxLength + ", size: " + size);
@@ -37,7 +43,7 @@ public class GenericLinkedQueue<T> implements GenericQueue<T>
 		size++;
 	}
 
-	public T dequeue()
+	public T dequeue() throws EmptyQueueException
 	{
 		if (isEmpty())
 			throw new EmptyQueueException();
@@ -65,5 +71,22 @@ public class GenericLinkedQueue<T> implements GenericQueue<T>
 	public boolean isFull()
 	{
 		return size == maxLength;
+	}
+
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder("[");
+		if (!isEmpty())
+		{
+			GenericNode<T> value = head.getNext();
+			while (value != null)
+			{
+				sb.append(value.getValue()).append(", ");
+				value = value.getNext();
+			}
+			sb.setLength(sb.length() - 2);
+		}
+		sb.append("]").append(" Size: " + size + ", MaxSize: " + maxLength);
+		return sb.toString();
 	}
 }

@@ -1,7 +1,14 @@
-package laboratorium.lista3;
+package laboratorium.lista3.object;
 
 import laboratorium.lista2.Node;
+import laboratorium.lista3.exceptions.EmptyQueueException;
+import laboratorium.lista3.exceptions.FullQueueException;
 
+/**
+ * 
+ * @author Kacper
+ *
+ */
 public class LinkedQueue implements Queue
 {
 	private static final int DEFAULT_MAX_SIZE = 10;

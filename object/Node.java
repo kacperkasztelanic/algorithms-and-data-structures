@@ -1,4 +1,4 @@
-package laboratorium.lista3;
+package laboratorium.lista3.object;
 
 /**
  * 

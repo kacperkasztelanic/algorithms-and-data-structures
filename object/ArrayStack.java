@@ -1,5 +1,12 @@
-package laboratorium.lista3;
+package laboratorium.lista3.object;
 
+import laboratorium.lista3.exceptions.EmptyStackException;
+
+/**
+ * 
+ * @author Kacper
+ *
+ */
 public class ArrayStack implements Stack
 {
 	private static final int DEFAULT_STACK_SIZE = 10;

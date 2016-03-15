@@ -1,27 +1,21 @@
-package laboratorium.lista3;
+package laboratorium.lista3.other;
 
-import java.util.Stack;
+import laboratorium.lista3.Results;
+import laboratorium.lista3.generics.GenericArrayStack;
+import laboratorium.lista3.generics.GenericStack;
 
-public class ONP
+public class RPNMyStack
 {
-	private String formula;
-	private String[] elements;
-	Stack<Double> stack;
-
-	public ONP(String formula)
+	private RPNMyStack()
 	{
-		this.formula = formula;
-		stack = new Stack<>();
 	}
 
-	private void splitFormula()
+	public static Results solve(String formula)
 	{
-		elements = formula.split(" ");
-	}
-
-	public double solve()
-	{
-		splitFormula();
+		formula = formula.trim();
+		formula = formula.replaceAll("\\s+", " ");
+		String[] elements = formula.split(" ");
+		GenericStack<Double> stack = new GenericArrayStack<>();
 		int i = 0;
 		while (i < elements.length)
 		{
@@ -74,37 +68,16 @@ public class ONP
 					stack.push(Math.log10(q));
 					break;
 				}
+				case 's':
+				{
+					double q = stack.pop();
+					stack.push(Math.sqrt(q));
+					break;
+				}
 				default:
 					break;
 			}
 		}
-		return stack.pop();
-	}
-
-	public String getFormula()
-	{
-		return formula;
-	}
-
-	public void setFormula(String formula)
-	{
-		this.formula = formula;
-	}
-
-	public String toString()
-	{
-		return formula;
-	}
-
-	public static void main(String[] args)
-	{
-		String formula = "12 2 3 4 * 10 5 / + * +";
-		// String formula = "1000 l";
-		// String formula = "7 3 + 5 2 - 2 ^ *";
-		// String formula = "5 620 + 1 2 / ^";
-		// String formula = "2 3 + 5 *";
-		// String formula = "77 3 + 5 2 - *";
-		ONP onp = new ONP(formula);
-		System.out.println(onp.solve());
+		return new Results(formula, stack.pop());
 	}
 }

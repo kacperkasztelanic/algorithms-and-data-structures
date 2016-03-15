@@ -2,8 +2,9 @@ package laboratorium.lista3.generics;
 
 /**
  * 
- * @author Kacper Kasztelanic
+ * @author Kacper
  *
+ * @param <T>
  */
 public class GenericNode<T>
 {

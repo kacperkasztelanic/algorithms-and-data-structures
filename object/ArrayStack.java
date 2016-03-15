@@ -76,8 +76,22 @@ public class ArrayStack implements Stack
 		return size == 0;
 	}
 
-	public int getTop()
+	public String toString()
 	{
-		return top;
+		int localSize = size;
+		int localTop = top;
+		StringBuilder sb = new StringBuilder("[");
+		if (!isEmpty())
+		{
+			while (localSize-- > 0)
+			{
+				sb.append(array[localTop--]).append(", ");
+				if (localTop < 0 && localSize > 0)
+					localTop = array.length - 1;
+			}
+			sb.setLength(sb.length() - 2);
+		}
+		sb.append("]").append(" Size: " + size + ", MaxSize: " + array.length);
+		return sb.toString();
 	}
 }

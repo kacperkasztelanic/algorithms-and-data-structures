@@ -1,5 +1,8 @@
 package laboratorium.lista3.object;
 
+import laboratorium.lista3.exceptions.EmptyQueueException;
+import laboratorium.lista3.exceptions.FullQueueException;
+
 /**
  * 
  * @author Kacper
@@ -7,9 +10,9 @@ package laboratorium.lista3.object;
  */
 public interface Queue
 {
-	void enqueue(Object value);
+	void enqueue(Object value) throws FullQueueException;
 
-	Object dequeue();
+	Object dequeue() throws EmptyQueueException;
 
 	void clear();
 

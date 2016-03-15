@@ -72,4 +72,21 @@ public class LinkedQueue implements Queue
 	{
 		return size == maxLength;
 	}
+
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder("[");
+		if (!isEmpty())
+		{
+			Node value = head.getNext();
+			while (value != null)
+			{
+				sb.append(value.getValue()).append(", ");
+				value = value.getNext();
+			}
+			sb.setLength(sb.length() - 2);
+		}
+		sb.append("]").append(" Size: " + size + ", MaxSize: " + maxLength);
+		return sb.toString();
+	}
 }

@@ -78,11 +78,6 @@ public class GenericArrayStack<T> implements GenericStack<T>
 		return size == 0;
 	}
 
-	public int getTop()
-	{
-		return top;
-	}
-
 	public String toString()
 	{
 		int localSize = size;

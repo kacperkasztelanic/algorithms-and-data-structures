@@ -7,16 +7,28 @@ import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
 
 public class ShellSort<T extends Comparable<T>> implements ListSorter<T>
 {
+	private static final GapSequence DEFAULT_GAP_SEQUENCE = GapSequence.TOKUDA;
+	private static final int DEFAULT_LIST_SIZE = 1000;
 	private GapSequence gapSequenceType;
 	private int[] gapSequenceArray;
 	private int buffer;
 	private int listSize;
 
+	public ShellSort()
+	{
+		this(DEFAULT_GAP_SEQUENCE);
+	}
+
+	public ShellSort(GapSequence gapSequenceType)
+	{
+		this(gapSequenceType, DEFAULT_LIST_SIZE);
+	}
+
 	public ShellSort(GapSequence gapSequenceType, int listSize)
 	{
 		this.gapSequenceType = gapSequenceType;
 		this.listSize = listSize;
-		setGapSequence(listSize);
+		setGapSequence();
 	}
 
 	public List<T> sort(List<T> list)
@@ -40,24 +52,24 @@ public class ShellSort<T extends Comparable<T>> implements ListSorter<T>
 		return list;
 	}
 
-	private void setGapSequence(int length)
+	private void setGapSequence()
 	{
 		switch (gapSequenceType)
 		{
 			case TOKUDA:
-				gapSequenceArray = ShellSortGapSequenceGenerator.tokuda(length);
+				gapSequenceArray = ShellSortGapSequenceGenerator.tokuda(listSize);
 				break;
 			case PRATT:
-				gapSequenceArray = ShellSortGapSequenceGenerator.pratt(length);
+				gapSequenceArray = ShellSortGapSequenceGenerator.pratt(listSize);
 				break;
 			case HIBBARD:
-				gapSequenceArray = ShellSortGapSequenceGenerator.hibbard(length);
+				gapSequenceArray = ShellSortGapSequenceGenerator.hibbard(listSize);
 				break;
 			case SHELL:
-				gapSequenceArray = ShellSortGapSequenceGenerator.shell(length);
+				gapSequenceArray = ShellSortGapSequenceGenerator.shell(listSize);
 				break;
 			case KNUTH:
-				gapSequenceArray = ShellSortGapSequenceGenerator.knuth(length);
+				gapSequenceArray = ShellSortGapSequenceGenerator.knuth(listSize);
 				break;
 		}
 	}
@@ -75,6 +87,7 @@ public class ShellSort<T extends Comparable<T>> implements ListSorter<T>
 	public void setGapSequenceType(GapSequence gapSequenceType)
 	{
 		this.gapSequenceType = gapSequenceType;
+		setGapSequence();
 	}
 
 	public int getListSize()
@@ -85,5 +98,16 @@ public class ShellSort<T extends Comparable<T>> implements ListSorter<T>
 	public void setListSize(int listSize)
 	{
 		this.listSize = listSize;
+		setGapSequence();
+	}
+
+	public static GapSequence getDefaultGapSequence()
+	{
+		return DEFAULT_GAP_SEQUENCE;
+	}
+
+	public static int getDefaultListSize()
+	{
+		return DEFAULT_LIST_SIZE;
 	}
 }

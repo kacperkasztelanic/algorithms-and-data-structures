@@ -8,7 +8,7 @@ public class ShellSortGapSequenceGenerator
 {
 	public enum GapSequence
 	{
-		TOKUDA, SHELL, PRATT, HIBBARD, KNUTH;
+		TOKUDA, SHELL, HIBBARD, KNUTH;
 	}
 
 	private ShellSortGapSequenceGenerator()
@@ -43,29 +43,6 @@ public class ShellSortGapSequenceGenerator
 		}
 		if (sequence.isEmpty())
 			sequence.add(1);
-		Collections.reverse(sequence);
-		return sequenceIntArray(sequence);
-	}
-
-	public static int[] pratt(int listSize)
-	{
-		List<Integer> sequence = new ArrayList<>();
-		int pow3 = 1;
-		int pow2;
-		int maxGap = listSize / 3;
-		while (pow3 <= maxGap)
-		{
-			pow2 = pow3;
-			while (pow2 <= maxGap)
-			{
-				sequence.add(pow2);
-				pow2 *= 2;
-			}
-			pow3 *= 3;
-		}
-		if (sequence.isEmpty())
-			sequence.add(1);
-		Collections.sort(sequence);
 		Collections.reverse(sequence);
 		return sequenceIntArray(sequence);
 	}

@@ -1,7 +1,6 @@
 package laboratorium.lista4.generic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
@@ -43,16 +42,6 @@ public class GenericTestSorting<T extends Comparable<T>>
 			case SHELLSHELL:
 				sorter = new ShellSort<>(GapSequence.SHELL, list.size());
 				break;
-			case SHELLPRATT:
-				sorter = new ShellSort<>(GapSequence.PRATT, list.size());
-				break;
-			case COLLECTIONS:
-			{
-				long start = System.nanoTime();
-				Collections.sort(list);
-				long end = System.nanoTime();
-				return (end - start) * 0.000001;
-			}
 		}
 		long start = System.nanoTime();
 		sorter.sort(list);

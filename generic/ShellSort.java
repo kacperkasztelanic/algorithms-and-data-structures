@@ -59,9 +59,6 @@ public class ShellSort<T extends Comparable<T>> implements ListSorter<T>
 			case TOKUDA:
 				gapSequenceArray = ShellSortGapSequenceGenerator.tokuda(listSize);
 				break;
-			case PRATT:
-				gapSequenceArray = ShellSortGapSequenceGenerator.pratt(listSize);
-				break;
 			case HIBBARD:
 				gapSequenceArray = ShellSortGapSequenceGenerator.hibbard(listSize);
 				break;

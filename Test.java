@@ -17,10 +17,10 @@ public class Test
 		RANDOM, ORDERED, REVERSED, PARTIALLY_ORDERED;
 	}
 
-	private List<Integer> listOfRandom;
+	private List<Vehicle> listOfRandom;
 	private int n;
 	private int partiallyOrderedNumberOfSections = 4;
-	private GenericTestSorting<Integer> sorting;
+	private GenericTestSorting<Vehicle> sorting;
 
 	public Test(int n, Mode mode)
 	{
@@ -34,7 +34,7 @@ public class Test
 	{
 		Random random = new Random();
 		for (int i = 0; i < n; i++)
-			listOfRandom.add(random.nextInt(50));
+			listOfRandom.add(new Vehicle(random.nextInt(1000), random.nextInt(100) + 1916));
 		switch (mode)
 		{
 			case RANDOM:
@@ -56,7 +56,7 @@ public class Test
 					partiallyOrderedNumberOfSections = 1;
 					oneSection = rest;
 				}
-				List<List<Integer>> listOfLists = new ArrayList<>(partiallyOrderedNumberOfSections);
+				List<List<Vehicle>> listOfLists = new ArrayList<>(partiallyOrderedNumberOfSections);
 				for (int i = 0; i < partiallyOrderedNumberOfSections - 1; i++)
 				{
 					listOfLists.add(new ArrayList<>(oneSection));
@@ -104,9 +104,6 @@ public class Test
 				case SHELLHIBBARD:
 					times[i] = sorting.testSorting(Sort.SHELLHIBBARD);
 					break;
-				case SHELLPRATT:
-					times[i] = sorting.testSorting(Sort.SHELLPRATT);
-					break;
 				case SHELLSHELL:
 					times[i] = sorting.testSorting(Sort.SHELLSHELL);
 					break;
@@ -115,9 +112,6 @@ public class Test
 					break;
 				case SHELLKNUTH:
 					times[i] = sorting.testSorting(Sort.SHELLKNUTH);
-					break;
-				case COLLECTIONS:
-					times[i] = sorting.testSorting(Sort.COLLECTIONS);
 					break;
 			}
 		}
@@ -129,24 +123,17 @@ public class Test
 		String pattern = "*%-15s%.4f ms%n";
 		StringBuilder sb = new StringBuilder(
 				"Sorted " + n + " elements, " + times + " times:" + System.lineSeparator());
-		// sb.append(String.format(pattern, "BubbleSort:",
-		// sortMultipleTimes(times, Sort.BUBBLESORT).getAverage()));
-		// sb.append(String.format(pattern, "InsertionSort:",
-		// sortMultipleTimes(times, Sort.INSERTIONSORT).getAverage()));
-		// sb.append(String.format(pattern, "SelectionSort:",
-		// sortMultipleTimes(times, Sort.SELECTIONSORT).getAverage()));
+		sb.append(String.format(pattern, "BubbleSort:", sortMultipleTimes(times, Sort.BUBBLESORT).getAverage()));
+		sb.append(String.format(pattern, "InsertionSort:", sortMultipleTimes(times, Sort.INSERTIONSORT).getAverage()));
+		sb.append(String.format(pattern, "SelectionSort:", sortMultipleTimes(times, Sort.SELECTIONSORT).getAverage()));
 		sb.append(String.format(pattern, "ShellSort (Hibbard): ",
 				sortMultipleTimes(times, Sort.SHELLHIBBARD).getAverage()));
-		// sb.append(
-		// String.format(pattern, "ShellSort (Pratt): ",
-		// sortMultipleTimes(times, Sort.SHELLPRATT).getAverage()));
 		sb.append(
 				String.format(pattern, "ShellSort (Knuth): ", sortMultipleTimes(times, Sort.SHELLKNUTH).getAverage()));
 		sb.append(
 				String.format(pattern, "ShellSort (Shell): ", sortMultipleTimes(times, Sort.SHELLSHELL).getAverage()));
 		sb.append(String.format(pattern, "ShellSort (Tokuda): ",
 				sortMultipleTimes(times, Sort.SHELLTOKUDA).getAverage()));
-		sb.append(String.format(pattern, "Collections: ", sortMultipleTimes(times, Sort.COLLECTIONS).getAverage()));
 		return sb.toString();
 	}
 
@@ -172,34 +159,37 @@ public class Test
 		this.partiallyOrderedNumberOfSections = partiallyOrderedNumberOfSections;
 	}
 
-	public List<Integer> getListOfRandom()
+	public List<Vehicle> getListOfRandom()
 	{
 		return listOfRandom;
 	}
 
 	public static void main(String[] args)
 	{
-		int number = 1000000;
+		int number = 25000;
 		int times = 10;
-		// System.out.println("Random");
-		// Test t = new Test(number, Mode.RANDOM);
-		// String report = t.doAllSortings(times, false);
-		// System.out.println(report);
-		//
-		// System.out.println("Ordered");
-		// Test t2 = new Test(number, Mode.ORDERED);
-		// String report2 = t2.doAllSortings(times, false);
-		// System.out.println(report2);
-		//
-		// System.out.println("Reversed");
-		// Test t3 = new Test(number, Mode.REVERSED);
-		// String report3 = t3.doAllSortings(times, false);
-		// System.out.println(report3);
+		System.out.println("Random");
+		Test t = new Test(number, Mode.RANDOM);
+		String report = t.doAllSortings(times, false);
+		System.out.println(report);
+		t.saveReport(report, number + "Random.txt");
 
-		System.out.println("Partially Ordered");
-		Test t4 = new Test(number, Mode.PARTIALLY_ORDERED);
-		t4.setPartiallyOrderedNumberOfSections(5000);
-		String report4 = t4.doAllSortings(times, false);
-		System.out.println(report4);
+		System.out.println("Ordered");
+		Test t2 = new Test(number, Mode.ORDERED);
+		String report2 = t2.doAllSortings(times, false);
+		System.out.println(report2);
+		t.saveReport(report2, number + "Ordered.txt");
+
+		System.out.println("Reversed");
+		Test t3 = new Test(number, Mode.REVERSED);
+		String report3 = t3.doAllSortings(times, false);
+		System.out.println(report3);
+		t.saveReport(report3, number + "Reversed.txt");
+
+		// System.out.println("Partially Ordered");
+		// Test t4 = new Test(number, Mode.PARTIALLY_ORDERED);
+		// t4.setPartiallyOrderedNumberOfSections(5);
+		// String report4 = t4.doAllSortings(times, false);
+		// System.out.println(report4);
 	}
 }

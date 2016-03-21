@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
-import laboratorium.lista4.Sort;
+import laboratorium.lista4.BasicSort;
 
-public class GenericTestSorting<T extends Comparable<T>>
+public class GenericTestBasicSorting<T extends Comparable<T>>
 {
 	private List<T> listOfRandom;
 
-	public GenericTestSorting(List<T> list)
+	public GenericTestBasicSorting(List<T> list)
 	{
 		this.listOfRandom = list;
 	}
 
-	public double testSorting(Sort sortMethod)
+	public double testSorting(BasicSort sortMethod)
 	{
 		List<T> list = new ArrayList<>(listOfRandom);
 		ListSorter<T> sorter = null;

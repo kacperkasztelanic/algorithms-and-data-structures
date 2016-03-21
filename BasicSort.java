@@ -1,6 +1,6 @@
 package laboratorium.lista4;
 
-public enum Sort
+public enum BasicSort
 {
 	BUBBLESORT, INSERTIONSORT, SELECTIONSORT, SHELLHIBBARD, SHELLKNUTH, SHELLSHELL, SHELLTOKUDA;
 }

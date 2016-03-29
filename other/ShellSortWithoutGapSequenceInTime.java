@@ -29,7 +29,7 @@ public class ShellSortWithoutGapSequenceInTime<T extends Comparable<? super T>> 
 	{
 		this.gapSequenceType = gapSequenceType;
 		this.listSize = listSize;
-		setGapSequence();
+		setGapSequenceArray();
 	}
 
 	public List<T> sort(List<T> list)
@@ -53,23 +53,9 @@ public class ShellSortWithoutGapSequenceInTime<T extends Comparable<? super T>> 
 		return list;
 	}
 
-	private void setGapSequence()
+	private void setGapSequenceArray()
 	{
-		switch (gapSequenceType)
-		{
-			case TOKUDA:
-				gapSequenceArray = ShellSortGapSequenceGenerator.tokuda(listSize);
-				break;
-			case HIBBARD:
-				gapSequenceArray = ShellSortGapSequenceGenerator.hibbard(listSize);
-				break;
-			case SHELL:
-				gapSequenceArray = ShellSortGapSequenceGenerator.shell(listSize);
-				break;
-			case KNUTH:
-				gapSequenceArray = ShellSortGapSequenceGenerator.knuth(listSize);
-				break;
-		}
+		gapSequenceArray = ShellSortGapSequenceGenerator.generateGapSequence(gapSequenceType, listSize);
 	}
 
 	public int[] getGapSequenceArray()
@@ -85,7 +71,7 @@ public class ShellSortWithoutGapSequenceInTime<T extends Comparable<? super T>> 
 	public void setGapSequenceType(GapSequence gapSequenceType)
 	{
 		this.gapSequenceType = gapSequenceType;
-		setGapSequence();
+		setGapSequenceArray();
 	}
 
 	public int getListSize()
@@ -96,7 +82,7 @@ public class ShellSortWithoutGapSequenceInTime<T extends Comparable<? super T>> 
 	public void setListSize(int listSize)
 	{
 		this.listSize = listSize;
-		setGapSequence();
+		setGapSequenceArray();
 	}
 
 	public static GapSequence getDefaultGapSequence()

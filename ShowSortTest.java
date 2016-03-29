@@ -1,4 +1,4 @@
-package laboratorium.lista4.other;
+package laboratorium.lista4;
 
 import java.util.ArrayList;
 import java.util.Arrays;

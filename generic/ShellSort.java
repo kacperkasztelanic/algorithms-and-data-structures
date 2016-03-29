@@ -24,7 +24,7 @@ public class ShellSort<T extends Comparable<? super T>> implements ListSorter<T>
 
 	public List<T> sort(List<T> list)
 	{
-		setGapSequence(list.size());
+		setGapSequenceArray(list.size());
 		for (int i = 0; i < gapSequenceArray.length; i++)
 		{
 			for (int j = gapSequenceArray[i]; j < list.size(); j++)
@@ -44,23 +44,9 @@ public class ShellSort<T extends Comparable<? super T>> implements ListSorter<T>
 		return list;
 	}
 
-	private void setGapSequence(int listSize)
+	private void setGapSequenceArray(int listSize)
 	{
-		switch (gapSequenceType)
-		{
-			case TOKUDA:
-				gapSequenceArray = ShellSortGapSequenceGenerator.tokuda(listSize);
-				break;
-			case HIBBARD:
-				gapSequenceArray = ShellSortGapSequenceGenerator.hibbard(listSize);
-				break;
-			case SHELL:
-				gapSequenceArray = ShellSortGapSequenceGenerator.shell(listSize);
-				break;
-			case KNUTH:
-				gapSequenceArray = ShellSortGapSequenceGenerator.knuth(listSize);
-				break;
-		}
+		gapSequenceArray = ShellSortGapSequenceGenerator.generateGapSequence(gapSequenceType, listSize);
 	}
 
 	public int[] getGapSequenceArray()

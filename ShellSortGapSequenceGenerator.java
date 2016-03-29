@@ -15,23 +15,33 @@ public class ShellSortGapSequenceGenerator
 	{
 	}
 
+	public static int[] generateGapSequence(GapSequence gapSequenceType, int listSize)
+	{
+		int[] gapSequenceArray = null;
+		switch (gapSequenceType)
+		{
+			case TOKUDA:
+				gapSequenceArray = tokuda(listSize);
+				break;
+			case HIBBARD:
+				gapSequenceArray = hibbard(listSize);
+				break;
+			case SHELL:
+				gapSequenceArray = shell(listSize);
+				break;
+			case KNUTH:
+				gapSequenceArray = knuth(listSize);
+				break;
+		}
+		return gapSequenceArray;
+	}
+
 	private static int[] sequenceIntArray(List<Integer> sequence)
 	{
 		return sequence.stream().mapToInt(i -> i).toArray();
 	}
 
-	public static int[] shell(int listSize)
-	{
-		List<Integer> sequence = new ArrayList<>();
-		int gap = listSize;
-		while ((gap /= 2) > 0)
-			sequence.add(gap);
-		if (sequence.isEmpty())
-			sequence.add(1);
-		return sequenceIntArray(sequence);
-	}
-
-	public static int[] hibbard(int listSize)
+	private static int[] hibbard(int listSize)
 	{
 		List<Integer> sequence = new ArrayList<>();
 		int gap = 1;
@@ -47,7 +57,7 @@ public class ShellSortGapSequenceGenerator
 		return sequenceIntArray(sequence);
 	}
 
-	public static int[] knuth(int listSize)
+	private static int[] knuth(int listSize)
 	{
 		List<Integer> sequence = new ArrayList<>();
 		int maxGap = (int) Math.ceil(listSize / 3);
@@ -64,7 +74,18 @@ public class ShellSortGapSequenceGenerator
 		return sequenceIntArray(sequence);
 	}
 
-	public static int[] tokuda(int listSize)
+	private static int[] shell(int listSize)
+	{
+		List<Integer> sequence = new ArrayList<>();
+		int gap = listSize;
+		while ((gap /= 2) > 0)
+			sequence.add(gap);
+		if (sequence.isEmpty())
+			sequence.add(1);
+		return sequenceIntArray(sequence);
+	}
+
+	private static int[] tokuda(int listSize)
 	{
 		List<Integer> sequence = new ArrayList<>();
 		int gap = 1;

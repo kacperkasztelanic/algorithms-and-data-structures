@@ -2,7 +2,7 @@ package laboratorium.lista4.generic;
 
 import java.util.List;
 
-public class InsertionSort<T extends Comparable<T>> implements ListSorter<T>
+public class InsertionSort<T extends Comparable<? super T>> implements ListSorter<T>
 {
 	public List<T> sort(List<T> list)
 	{

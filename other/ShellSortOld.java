@@ -4,7 +4,7 @@ import java.util.List;
 
 import laboratorium.lista4.generic.ListSorter;
 
-public class ShellSortOld<T extends Comparable<T>> implements ListSorter<T>
+public class ShellSortOld<T extends Comparable<? super T>> implements ListSorter<T>
 {
 	public List<T> sort(List<T> list)
 	{

@@ -3,16 +3,15 @@ package laboratorium.lista4.generic;
 import java.util.ArrayList;
 import java.util.List;
 
-import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
 import laboratorium.lista4.BasicSort;
+import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
 
-public class GenericTestBasicSorting<T extends Comparable<T>>
+public class GenericTestBasicSorting<T extends Comparable<? super T>>
 {
 	private List<T> listOfRandom;
 
-	public GenericTestBasicSorting(List<T> list)
+	public GenericTestBasicSorting()
 	{
-		this.listOfRandom = list;
 	}
 
 	public double testSorting(BasicSort sortMethod)
@@ -31,16 +30,16 @@ public class GenericTestBasicSorting<T extends Comparable<T>>
 				sorter = new SelectionSort<>();
 				break;
 			case SHELLHIBBARD:
-				sorter = new ShellSort<>(GapSequence.HIBBARD, list.size());
+				sorter = new ShellSort<>(GapSequence.HIBBARD);
 				break;
 			case SHELLKNUTH:
-				sorter = new ShellSort<>(GapSequence.KNUTH, list.size());
+				sorter = new ShellSort<>(GapSequence.KNUTH);
 				break;
 			case SHELLTOKUDA:
-				sorter = new ShellSort<>(GapSequence.TOKUDA, list.size());
+				sorter = new ShellSort<>(GapSequence.TOKUDA);
 				break;
 			case SHELLSHELL:
-				sorter = new ShellSort<>(GapSequence.SHELL, list.size());
+				sorter = new ShellSort<>(GapSequence.SHELL);
 				break;
 		}
 		long start = System.nanoTime();
@@ -52,5 +51,10 @@ public class GenericTestBasicSorting<T extends Comparable<T>>
 	public List<T> getListOfRandom()
 	{
 		return listOfRandom;
+	}
+
+	public void setListOfRandom(List<T> listOfRandom)
+	{
+		this.listOfRandom = listOfRandom;
 	}
 }

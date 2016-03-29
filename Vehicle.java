@@ -1,10 +1,5 @@
 package laboratorium.lista4;
 
-/**
- * 
- * @author Kacper Kasztelanic
- *
- */
 public class Vehicle implements Comparable<Vehicle>
 {
 	int yearOfConstruction;

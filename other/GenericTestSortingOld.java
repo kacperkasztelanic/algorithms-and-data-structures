@@ -10,7 +10,7 @@ import laboratorium.lista4.generic.ListSorter;
 import laboratorium.lista4.generic.SelectionSort;
 import laboratorium.lista4.generic.ShellSort;
 
-public class GenericTestSortingOld<T extends Comparable<T>>
+public class GenericTestSortingOld<T extends Comparable<? super T>>
 {
 	private List<T> listOfRandom;
 
@@ -32,7 +32,7 @@ public class GenericTestSortingOld<T extends Comparable<T>>
 	public double shellTokuda()
 	{
 		List<T> list = new ArrayList<>(listOfRandom);
-		ListSorter<T> sorter = new ShellSort<>(GapSequence.TOKUDA, list.size());
+		ListSorter<T> sorter = new ShellSort<>(GapSequence.TOKUDA);
 		long start = System.nanoTime();
 		sorter.sort(list);
 		long end = System.nanoTime();
@@ -42,7 +42,7 @@ public class GenericTestSortingOld<T extends Comparable<T>>
 	public double shellShell()
 	{
 		List<T> list = new ArrayList<>(listOfRandom);
-		ListSorter<T> sorter = new ShellSort<>(GapSequence.SHELL, list.size());
+		ListSorter<T> sorter = new ShellSort<>(GapSequence.SHELL);
 		long start = System.nanoTime();
 		sorter.sort(list);
 		long end = System.nanoTime();
@@ -52,7 +52,7 @@ public class GenericTestSortingOld<T extends Comparable<T>>
 	public double shellHibbard()
 	{
 		List<T> list = new ArrayList<>(listOfRandom);
-		ListSorter<T> sorter = new ShellSort<>(GapSequence.HIBBARD, list.size());
+		ListSorter<T> sorter = new ShellSort<>(GapSequence.HIBBARD);
 		long start = System.nanoTime();
 		sorter.sort(list);
 		long end = System.nanoTime();
@@ -62,7 +62,7 @@ public class GenericTestSortingOld<T extends Comparable<T>>
 	public double shellKnuth()
 	{
 		List<T> list = new ArrayList<>(listOfRandom);
-		ListSorter<T> sorter = new ShellSort<>(GapSequence.KNUTH, list.size());
+		ListSorter<T> sorter = new ShellSort<>(GapSequence.KNUTH);
 		long start = System.nanoTime();
 		sorter.sort(list);
 		long end = System.nanoTime();

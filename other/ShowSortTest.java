@@ -12,10 +12,8 @@ import laboratorium.lista4.generic.ListSorter;
 import laboratorium.lista4.generic.SelectionSort;
 import laboratorium.lista4.generic.ShellSort;
 
-public class TrollTest
+public class ShowSortTest
 {
-	public static int n = 10;
-
 	public static void trollBubble()
 	{
 		Random random = new Random();
@@ -52,29 +50,42 @@ public class TrollTest
 		System.out.println("Sorted: " + list + " Size: " + list.size());
 	}
 
-	public static void trollShell()
+	public static void trollShell(GapSequence gapSequence)
 	{
 		Random random = new Random();
 		List<Integer> list = new ArrayList<>();
 		for (int i = 0; i < n; i++)
 			list.add(random.nextInt(100));
 		System.out.println("Unsorted: " + list + " Size: " + list.size());
-		ShellSort<Integer> sorter = new ShellSort<>(GapSequence.TOKUDA, list.size());
-		// sorter.setGapSequenceType(GapSequence.TOKUDA);
-		// sorter.setGapSequenceType(GapSequence.SHELL);
-		// sorter.setGapSequenceType(GapSequence.PRATT);
+		ShellSort<Integer> sorter = null;
+		switch (gapSequence)
+		{
+			case HIBBARD:
+				sorter = new ShellSort<>(GapSequence.HIBBARD);
+				break;
+			case KNUTH:
+				sorter = new ShellSort<>(GapSequence.KNUTH);
+				break;
+			case SHELL:
+				sorter = new ShellSort<>(GapSequence.SHELL);
+				break;
+			case TOKUDA:
+				sorter = new ShellSort<>(GapSequence.TOKUDA);
+				break;
+		}
 		list = sorter.sort(list);
 		System.out.println("Sorted: " + list + " Size: " + list.size());
-		System.out.println(Arrays.toString(sorter.getGapSequenceArray()));
-		System.out.println(sorter.getGapSequenceType());
+		System.out.println(
+				"GapSequence: " + sorter.getGapSequenceType() + " " + Arrays.toString(sorter.getGapSequenceArray()));
 	}
+
+	public static int n = 10;
 
 	public static void main(String[] args)
 	{
-		trollShell();
+		trollShell(GapSequence.KNUTH);
 		trollBubble();
 		trollInsert();
 		trollSelect();
 	}
-
 }

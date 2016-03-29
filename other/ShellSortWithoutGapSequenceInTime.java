@@ -1,30 +1,39 @@
-package laboratorium.lista4.generic;
+package laboratorium.lista4.other;
 
 import java.util.List;
 
 import laboratorium.lista4.ShellSortGapSequenceGenerator;
 import laboratorium.lista4.ShellSortGapSequenceGenerator.GapSequence;
+import laboratorium.lista4.generic.ListSorter;
 
-public class ShellSort<T extends Comparable<? super T>> implements ListSorter<T>
+public class ShellSortWithoutGapSequenceInTime<T extends Comparable<? super T>> implements ListSorter<T>
 {
 	private static final GapSequence DEFAULT_GAP_SEQUENCE = GapSequence.KNUTH;
+	private static final int DEFAULT_LIST_SIZE = 1000;
 	private GapSequence gapSequenceType;
 	private int[] gapSequenceArray;
 	private int buffer;
+	private int listSize;
 
-	public ShellSort()
+	public ShellSortWithoutGapSequenceInTime()
 	{
 		this(DEFAULT_GAP_SEQUENCE);
 	}
 
-	public ShellSort(GapSequence gapSequenceType)
+	public ShellSortWithoutGapSequenceInTime(GapSequence gapSequenceType)
+	{
+		this(gapSequenceType, DEFAULT_LIST_SIZE);
+	}
+
+	public ShellSortWithoutGapSequenceInTime(GapSequence gapSequenceType, int listSize)
 	{
 		this.gapSequenceType = gapSequenceType;
+		this.listSize = listSize;
+		setGapSequence();
 	}
 
 	public List<T> sort(List<T> list)
 	{
-		setGapSequence(list.size());
 		for (int i = 0; i < gapSequenceArray.length; i++)
 		{
 			for (int j = gapSequenceArray[i]; j < list.size(); j++)
@@ -44,7 +53,7 @@ public class ShellSort<T extends Comparable<? super T>> implements ListSorter<T>
 		return list;
 	}
 
-	private void setGapSequence(int listSize)
+	private void setGapSequence()
 	{
 		switch (gapSequenceType)
 		{
@@ -76,10 +85,27 @@ public class ShellSort<T extends Comparable<? super T>> implements ListSorter<T>
 	public void setGapSequenceType(GapSequence gapSequenceType)
 	{
 		this.gapSequenceType = gapSequenceType;
+		setGapSequence();
+	}
+
+	public int getListSize()
+	{
+		return listSize;
+	}
+
+	public void setListSize(int listSize)
+	{
+		this.listSize = listSize;
+		setGapSequence();
 	}
 
 	public static GapSequence getDefaultGapSequence()
 	{
 		return DEFAULT_GAP_SEQUENCE;
+	}
+
+	public static int getDefaultListSize()
+	{
+		return DEFAULT_LIST_SIZE;
 	}
 }

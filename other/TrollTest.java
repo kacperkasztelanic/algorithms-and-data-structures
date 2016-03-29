@@ -55,6 +55,21 @@ public class TrollTest
 				sorter = new MergeSortLI<>();
 				break;
 			}
+			case MERGESORTJAVA:
+			{
+				System.out.println("MergeSortJava");
+				sorter = new MergeSortJava<>();
+				break;
+			}
+			case COLLECTIONS:
+			{
+				System.out.println("Collections");
+				System.out.println(list);
+				Collections.sort(list);
+				System.out.println(list);
+				System.out.println(true);
+				return;
+			}
 		}
 		System.out.println(list.toString());
 		list = sorter.sort(list);

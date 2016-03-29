@@ -6,12 +6,12 @@ import java.util.ListIterator;
 
 import laboratorium.lista5.generic.ListSorter;
 
-public class MergeSortLI<T extends Comparable<T>> implements ListSorter<T>
+public class MergeSortLI<T extends Comparable<? super T>> implements ListSorter<T>
 {
-	public List<T> sort(List<T> list) throws IndexOutOfBoundsException
+	public List<T> sort(List<T> list)
 	{
 		if (list.size() < 1)
-			throw new IndexOutOfBoundsException("Index: 0, Size: " + list.size());
+			return list;
 		return mergesort(list, 0, list.size() - 1);
 	}
 

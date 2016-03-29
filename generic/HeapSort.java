@@ -2,7 +2,7 @@ package laboratorium.lista5.generic;
 
 import java.util.List;
 
-public class HeapSort<T extends Comparable<T>> implements ListSorter<T>
+public class HeapSort<T extends Comparable<? super T>> implements ListSorter<T>
 {
 	private int n;
 

@@ -9,10 +9,12 @@ import java.util.Queue;
 
 import laboratorium.lista5.generic.ListSorter;
 
-public class MergeSortIterative<T extends Comparable<T>> implements ListSorter<T>
+public class MergeSortIterative<T extends Comparable<? super T>> implements ListSorter<T>
 {
 	public List<T> sort(List<T> list)
 	{
+		if (list.size() < 1)
+			return list;
 		return mergeSublists(createQueue(list));
 	}
 

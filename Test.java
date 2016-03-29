@@ -85,12 +85,12 @@ public class Test
 		return sum / (n.length - start);
 	}
 
-	public Results sortMultipleTimes(int n, AdvancedSort mode)
+	public Results sortMultipleTimes(int n, AdvancedSort method)
 	{
 		double[] times = new double[n];
 		for (int i = 0; i < n; i++)
 		{
-			switch (mode)
+			switch (method)
 			{
 				case QUICKSORT:
 					times[i] = sorting.testSorting(AdvancedSort.QUICKSORT);
@@ -104,26 +104,27 @@ public class Test
 				case MERGESORTITERATIVE:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
 					break;
+				case MERGESORTJAVA:
+					times[i] = sorting.testSorting(AdvancedSort.MERGESORTJAVA);
+					break;
 				case MERGESORTLI:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
+					break;
+				case COLLECTIONS:
+					times[i] = sorting.testSorting(AdvancedSort.COLLECTIONS);
 					break;
 			}
 		}
 		return new Results(times, calculateAverage(times, n > 4 ? 4 : 0));
 	}
 
-	public String doAllSortings(int times, boolean verbose)
+	public String doAllSortings(int times)
 	{
 		String pattern = "*%-15s%.4f ms%n";
 		StringBuilder sb = new StringBuilder(
 				"Sorted " + n + " elements, " + times + " times:" + System.lineSeparator());
-		sb.append(String.format(pattern, "QuickSort:", sortMultipleTimes(times, AdvancedSort.QUICKSORT).getAverage()));
-		sb.append(String.format(pattern, "MergeSort:", sortMultipleTimes(times, AdvancedSort.MERGESORT).getAverage()));
-		sb.append(String.format(pattern, "MergeSortLI:",
-				sortMultipleTimes(times, AdvancedSort.MERGESORTLI).getAverage()));
-		sb.append(String.format(pattern, "MSIterative:",
-				sortMultipleTimes(times, AdvancedSort.MERGESORTITERATIVE).getAverage()));
-		sb.append(String.format(pattern, "HeapSort:", sortMultipleTimes(times, AdvancedSort.HEAPSORT).getAverage()));
+		for (AdvancedSort method : AdvancedSort.values())
+			sb.append(String.format(pattern, method.toString(), sortMultipleTimes(times, method).getAverage()));
 		return sb.toString();
 	}
 
@@ -160,19 +161,19 @@ public class Test
 		int times = 10;
 		System.out.println("Random");
 		Test t = new Test(number, Mode.RANDOM);
-		String report = t.doAllSortings(times, false);
+		String report = t.doAllSortings(times);
 		System.out.println(report);
 		// t.saveReport(report, number + "Random.txt");
 
 		System.out.println("Ordered");
 		Test t2 = new Test(number, Mode.ORDERED);
-		String report2 = t2.doAllSortings(times, false);
+		String report2 = t2.doAllSortings(times);
 		System.out.println(report2);
 		// t.saveReport(report2, number + "Ordered.txt");
 
 		System.out.println("Reversed");
 		Test t3 = new Test(number, Mode.REVERSED);
-		String report3 = t3.doAllSortings(times, false);
+		String report3 = t3.doAllSortings(times);
 		System.out.println(report3);
 		// t.saveReport(report3, number + "Reversed.txt");
 

@@ -2,12 +2,12 @@ package laboratorium.lista5.generic;
 
 import java.util.List;
 
-public class QuickSort<T extends Comparable<T>> implements ListSorter<T>
+public class QuickSort<T extends Comparable<? super T>> implements ListSorter<T>
 {
-	public List<T> sort(List<T> list) throws IndexOutOfBoundsException
+	public List<T> sort(List<T> list)
 	{
 		if (list.size() < 1)
-			throw new IndexOutOfBoundsException("Index: 0, Size: " + list.size());
+			return list;
 		return quickSort(list, 0, list.size() - 1);
 	}
 

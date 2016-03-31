@@ -303,8 +303,10 @@ public class Test
 		Test t = new Test();
 		String report = t.sorting(times, toOmit, array);
 		System.out.print(report);
+
 		// System.out.println(t.showTimes(100, BasicSort.BUBBLESORT,
 		// Mode.RANDOM, times, toOmit));
+
 		System.out.println(sortList(10, 4, Mode.RANDOM, BasicSort.BUBBLESORT));
 	}
 }

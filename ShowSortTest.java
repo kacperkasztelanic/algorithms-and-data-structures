@@ -1,21 +1,23 @@
-package laboratorium.lista5.other;
+package laboratorium.lista5;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import laboratorium.lista5.AdvancedSort;
 import laboratorium.lista5.generic.HeapSort;
 import laboratorium.lista5.generic.ListSorter;
+import laboratorium.lista5.generic.MergeSortJava;
 import laboratorium.lista5.generic.QuickSort;
+import laboratorium.lista5.other.MergeSortIterative;
+import laboratorium.lista5.other.MergeSortLI;
 
-public class TrollTest
+public class ShowSortTest
 {
 	private static int n = 10;
 	private static int boundary = 100;
 
-	public static void trollSort(AdvancedSort method)
+	public static void showSort(AdvancedSort method)
 	{
 		Random random = new Random();
 		List<Integer> list = new ArrayList<>();
@@ -67,7 +69,6 @@ public class TrollTest
 				System.out.println(list);
 				Collections.sort(list);
 				System.out.println(list);
-				System.out.println(true);
 				return;
 			}
 		}
@@ -75,12 +76,12 @@ public class TrollTest
 		list = sorter.sort(list);
 		Collections.sort(copy);
 		System.out.println(list.toString());
-		System.out.println(copy.equals(list));
+		System.out.println("OK?: " + copy.equals(list));
 	}
 
 	public static void main(String[] args)
 	{
 		for (AdvancedSort method : AdvancedSort.values())
-			trollSort(method);
+			showSort(method);
 	}
 }

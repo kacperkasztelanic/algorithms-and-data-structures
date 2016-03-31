@@ -1,9 +1,7 @@
-package laboratorium.lista5.other;
+package laboratorium.lista5.generic;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import laboratorium.lista5.generic.ListSorter;
 
 public class MergeSortJava<T extends Comparable<? super T>> implements ListSorter<T>
 {
@@ -14,7 +12,7 @@ public class MergeSortJava<T extends Comparable<? super T>> implements ListSorte
 		if (list.size() < 1)
 			return list;
 		List<T> result = new ArrayList<>(list);
-		mergeSort(list, result, 0, list.size() - 1);
+		mergeSort(list, result, 0, list.size());
 		return result;
 	}
 

@@ -4,37 +4,69 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import laboratorium.lista5.generic.GenericTestAdvancedSorting;
+import laboratorium.lista5.generic.HeapSort;
+import laboratorium.lista5.generic.ListSorter;
+import laboratorium.lista5.generic.MergeSort;
+import laboratorium.lista5.generic.MergeSortJava;
+import laboratorium.lista5.generic.QuickSort;
+import laboratorium.lista5.other.MergeSortIterative;
+import laboratorium.lista5.other.MergeSortLI;
 
 public class Test
 {
 	public enum Mode
 	{
-		RANDOM, ORDERED, REVERSED, PARTIALLY_ORDERED;
+		RANDOM("Random"), ORDERED("Ordered"), REVERSED("Reversed"), PARTIALLY_ORDERED("Partially Ordered");
+		private String mode;
+
+		private Mode(String mode)
+		{
+			this.mode = mode;
+		}
+
+		public String toString()
+		{
+			return mode;
+		}
 	}
 
 	private List<Vehicle> listOfRandom;
-	private int n;
-	private int partiallyOrderedNumberOfSections = 4;
+	private int numberOfElements;
+	private int partiallyOrderedNumberOfSections;
 	private GenericTestAdvancedSorting<Vehicle> sorting;
 
-	public Test(int n, Mode mode)
+	public Test()
 	{
-		this.n = n;
-		listOfRandom = new ArrayList<>(n);
-		generateRandom(mode);
-		sorting = new GenericTestAdvancedSorting<>(listOfRandom);
+		this(1000);
+	}
+
+	public Test(int n)
+	{
+		this(n, 4);
+	}
+
+	public Test(int n, int sections)
+	{
+		this.numberOfElements = n;
+		this.partiallyOrderedNumberOfSections = sections;
+		listOfRandom = new ArrayList<>();
+		sorting = new GenericTestAdvancedSorting<>();
 	}
 
 	private void generateRandom(Mode mode)
 	{
+		listOfRandom.clear();
 		Random random = new Random();
-		for (int i = 0; i < n; i++)
-			listOfRandom.add(new Vehicle(random.nextInt(1000), random.nextInt(100) + 1916));
+		for (int i = 0; i < numberOfElements; i++)
+			listOfRandom.add(new Vehicle(random.nextInt(10000), random.nextInt(100) + 1916));
 		switch (mode)
 		{
 			case RANDOM:
@@ -85,7 +117,7 @@ public class Test
 		return sum / (n.length - start);
 	}
 
-	public Results sortMultipleTimes(int n, AdvancedSort method)
+	public Results sortMultipleTimes(int n, int toOmit, AdvancedSort method)
 	{
 		double[] times = new double[n];
 		for (int i = 0; i < n; i++)
@@ -101,11 +133,11 @@ public class Test
 				case HEAPSORT:
 					times[i] = sorting.testSorting(AdvancedSort.HEAPSORT);
 					break;
-				case MERGESORTITERATIVE:
-					times[i] = sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
-					break;
 				case MERGESORTJAVA:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTJAVA);
+					break;
+				case MERGESORTITERATIVE:
+					times[i] = sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
 					break;
 				case MERGESORTLI:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
@@ -115,16 +147,73 @@ public class Test
 					break;
 			}
 		}
-		return new Results(times, calculateAverage(times, n > 4 ? 4 : 0));
+		return new Results(times, calculateAverage(times, n > toOmit ? toOmit : 0));
 	}
 
-	public String doAllSortings(int times)
+	public String doAllSortings(int times, int toOmit)
 	{
-		String pattern = "*%-15s%.4f ms%n";
+		String pattern = "*%-16s%.4f ms%n";
 		StringBuilder sb = new StringBuilder(
-				"Sorted " + n + " elements, " + times + " times:" + System.lineSeparator());
-		for (AdvancedSort method : AdvancedSort.values())
-			sb.append(String.format(pattern, method.toString(), sortMultipleTimes(times, method).getAverage()));
+				"Sorted " + numberOfElements + " elements, " + times + " times:" + System.lineSeparator());
+		for (Mode m : Mode.values())
+		{
+			sb.append(m.equals(Mode.PARTIALLY_ORDERED)
+					? m.toString() + " - " + partiallyOrderedNumberOfSections + " sections" : m.toString())
+					.append(System.lineSeparator());
+			generateRandom(m);
+			sorting.setListOfRandom(listOfRandom);
+			for (AdvancedSort as : AdvancedSort.values())
+				sb.append(String.format(pattern, as.toString(), sortMultipleTimes(times, toOmit, as).getAverage()));
+			sb.append(System.lineSeparator());
+		}
+		return sb.toString();
+	}
+
+	public String benchmarkSorting(int timesEach, int toOmit, int[] numberOfElements)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (int i : numberOfElements)
+		{
+			setNumberOfElements(i);
+			sb.append(doAllSortings(timesEach, toOmit));
+		}
+		return sb.toString();
+	}
+
+	public String sorting(int times, int toOmit, int[] number)
+	{
+		StringBuilder sb = new StringBuilder();
+		Map<Mode, Map<AdvancedSort, List<Double>>> results = new HashMap<>();
+		for (int i : number)
+		{
+			setNumberOfElements(i);
+			for (Mode m : Mode.values())
+			{
+				if (!results.containsKey(m))
+					results.put(m, new HashMap<>());
+				generateRandom(m);
+				sorting.setListOfRandom(listOfRandom);
+				for (AdvancedSort as : AdvancedSort.values())
+				{
+					if (!results.get(m).containsKey(as))
+						results.get(m).put(as, new ArrayList<>());
+					results.get(m).get(as).add(sortMultipleTimes(times, toOmit, as).getAverage());
+				}
+			}
+		}
+		for (Mode m : Mode.values())
+		{
+			sb.append(m.toString()).append(System.lineSeparator());
+			for (AdvancedSort as : AdvancedSort.values())
+			{
+				sb.append(as.toString()).append(": |");
+				for (int i = 0; i < number.length; i++)
+				{
+					sb.append(String.format("%.4f", results.get(m).get(as).get(i))).append("|");
+				}
+				sb.append(System.lineSeparator());
+			}
+		}
 		return sb.toString();
 	}
 
@@ -155,32 +244,70 @@ public class Test
 		return listOfRandom;
 	}
 
+	public int getNumberOfElements()
+	{
+		return numberOfElements;
+	}
+
+	public void setNumberOfElements(int n)
+	{
+		this.numberOfElements = n;
+	}
+
+	public String showTimes(int n, AdvancedSort sort, Mode mode, int times, int toOmit)
+	{
+		setNumberOfElements(n);
+		generateRandom(mode);
+		sorting.setListOfRandom(listOfRandom);
+		Results results = sortMultipleTimes(times, toOmit, sort);
+		return Arrays.toString(results.getTimes());
+	}
+
+	public static List<Vehicle> sortList(int n, int sections, Mode mode, AdvancedSort sort)
+	{
+		Test test = new Test(n, sections);
+		test.generateRandom(mode);
+		List<Vehicle> sortedList = new ArrayList<>(test.getListOfRandom());
+		ListSorter<Vehicle> sorter = null;
+		switch (sort)
+		{
+			case QUICKSORT:
+				sorter = new QuickSort<>();
+				break;
+			case MERGESORT:
+				sorter = new MergeSort<>();
+				break;
+			case HEAPSORT:
+				sorter = new HeapSort<>();
+				break;
+			case MERGESORTJAVA:
+				sorter = new MergeSortJava<>();
+				break;
+			case MERGESORTITERATIVE:
+				sorter = new MergeSortIterative<>();
+				break;
+			case MERGESORTLI:
+				sorter = new MergeSortLI<>();
+				break;
+			case COLLECTIONS:
+				Collections.sort(sortedList);
+				return sortedList;
+		}
+		return sorter.sort(sortedList);
+	}
+
 	public static void main(String[] args)
 	{
-		int number = 100000;
-		int times = 10;
-		System.out.println("Random");
-		Test t = new Test(number, Mode.RANDOM);
-		String report = t.doAllSortings(times);
-		System.out.println(report);
-		// t.saveReport(report, number + "Random.txt");
+		int times = 200;
+		int toOmit = 150;
+		int[] array = { 1000, 2000 };
+		Test t = new Test();
+		String report = t.sorting(times, toOmit, array);
+		System.out.print(report);
 
-		System.out.println("Ordered");
-		Test t2 = new Test(number, Mode.ORDERED);
-		String report2 = t2.doAllSortings(times);
-		System.out.println(report2);
-		// t.saveReport(report2, number + "Ordered.txt");
+		// System.out.println(t.showTimes(100, BasicSort.BUBBLESORT,
+		// Mode.RANDOM, times, toOmit));
 
-		System.out.println("Reversed");
-		Test t3 = new Test(number, Mode.REVERSED);
-		String report3 = t3.doAllSortings(times);
-		System.out.println(report3);
-		// t.saveReport(report3, number + "Reversed.txt");
-
-		// System.out.println("Partially Ordered");
-		// Test t4 = new Test(number, Mode.PARTIALLY_ORDERED);
-		// t4.setPartiallyOrderedNumberOfSections(5);
-		// String report4 = t4.doAllSortings(times, false);
-		// System.out.println(report4);
+		System.out.println(sortList(10, 4, Mode.RANDOM, AdvancedSort.QUICKSORT));
 	}
 }

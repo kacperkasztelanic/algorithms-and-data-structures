@@ -6,16 +6,14 @@ import java.util.List;
 
 import laboratorium.lista5.AdvancedSort;
 import laboratorium.lista5.other.MergeSortIterative;
-import laboratorium.lista5.other.MergeSortJava;
 import laboratorium.lista5.other.MergeSortLI;
 
 public class GenericTestAdvancedSorting<T extends Comparable<? super T>>
 {
 	private List<T> listOfRandom;
 
-	public GenericTestAdvancedSorting(List<T> list)
+	public GenericTestAdvancedSorting()
 	{
-		this.listOfRandom = list;
 	}
 
 	public double testSorting(AdvancedSort sortMethod)
@@ -59,5 +57,10 @@ public class GenericTestAdvancedSorting<T extends Comparable<? super T>>
 	public List<T> getListOfRandom()
 	{
 		return listOfRandom;
+	}
+
+	public void setListOfRandom(List<T> listOfRandom)
+	{
+		this.listOfRandom = listOfRandom;
 	}
 }

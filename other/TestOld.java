@@ -105,18 +105,19 @@ public class TestOld
 				case HEAPSORT:
 					times[i] = sorting.testSorting(AdvancedSort.HEAPSORT);
 					break;
-				case MERGESORTITERATIVE:
-					times[i] = sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
-					break;
 				case MERGESORTJAVA:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTJAVA);
 					break;
-				case MERGESORTLI:
-					times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
-					break;
-				case COLLECTIONS:
-					times[i] = sorting.testSorting(AdvancedSort.COLLECTIONS);
-					break;
+				// case MERGESORTITERATIVE:
+				// times[i] =
+				// sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
+				// break;
+				// case MERGESORTLI:
+				// times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
+				// break;
+				// case COLLECTIONS:
+				// times[i] = sorting.testSorting(AdvancedSort.COLLECTIONS);
+				// break;
 			}
 		}
 		return new Results(times, calculateAverage(times, n > 4 ? 4 : 0));

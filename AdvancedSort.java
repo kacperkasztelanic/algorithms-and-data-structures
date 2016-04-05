@@ -2,5 +2,9 @@ package laboratorium.lista5;
 
 public enum AdvancedSort
 {
-	MERGESORT, MERGESORTJAVA, MERGESORTITERATIVE, MERGESORTLI, HEAPSORT, QUICKSORT, COLLECTIONS;
+	MERGESORT, MERGESORTJAVA, HEAPSORT, QUICKSORT;/*
+													 * , COLLECTIONS,
+													 * MERGESORTITERATIVE,
+													 * MERGESORTLI;
+													 */
 }

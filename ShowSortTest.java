@@ -9,7 +9,6 @@ import laboratorium.lista5.generic.HeapSort;
 import laboratorium.lista5.generic.ListSorter;
 import laboratorium.lista5.generic.MergeSortJava;
 import laboratorium.lista5.generic.QuickSort;
-import laboratorium.lista5.other.MergeSortIterative;
 import laboratorium.lista5.other.MergeSortLI;
 
 public class ShowSortTest
@@ -45,32 +44,32 @@ public class ShowSortTest
 				sorter = new QuickSort<>();
 				break;
 			}
-			case MERGESORTITERATIVE:
-			{
-				System.out.println("MergeSortIterative");
-				sorter = new MergeSortIterative<>();
-				break;
-			}
-			case MERGESORTLI:
-			{
-				System.out.println("MergeSortLI");
-				sorter = new MergeSortLI<>();
-				break;
-			}
 			case MERGESORTJAVA:
 			{
 				System.out.println("MergeSortJava");
 				sorter = new MergeSortJava<>();
 				break;
 			}
-			case COLLECTIONS:
-			{
-				System.out.println("Collections");
-				System.out.println(list);
-				Collections.sort(list);
-				System.out.println(list);
-				return;
-			}
+				// case MERGESORTITERATIVE:
+				// {
+				// System.out.println("MergeSortIterative");
+				// sorter = new MergeSortIterative<>();
+				// break;
+				// }
+				// case MERGESORTLI:
+				// {
+				// System.out.println("MergeSortLI");
+				// sorter = new MergeSortLI<>();
+				// break;
+				// }
+				// case COLLECTIONS:
+				// {
+				// System.out.println("Collections");
+				// System.out.println(list);
+				// Collections.sort(list);
+				// System.out.println(list);
+				// return;
+				// }
 		}
 		System.out.println(list.toString());
 		list = sorter.sort(list);

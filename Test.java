@@ -17,8 +17,6 @@ import laboratorium.lista5.generic.ListSorter;
 import laboratorium.lista5.generic.MergeSort;
 import laboratorium.lista5.generic.MergeSortJava;
 import laboratorium.lista5.generic.QuickSort;
-import laboratorium.lista5.other.MergeSortIterative;
-import laboratorium.lista5.other.MergeSortLI;
 
 public class Test
 {
@@ -136,15 +134,16 @@ public class Test
 				case MERGESORTJAVA:
 					times[i] = sorting.testSorting(AdvancedSort.MERGESORTJAVA);
 					break;
-				case MERGESORTITERATIVE:
-					times[i] = sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
-					break;
-				case MERGESORTLI:
-					times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
-					break;
-				case COLLECTIONS:
-					times[i] = sorting.testSorting(AdvancedSort.COLLECTIONS);
-					break;
+				// case MERGESORTITERATIVE:
+				// times[i] =
+				// sorting.testSorting(AdvancedSort.MERGESORTITERATIVE);
+				// break;
+				// case MERGESORTLI:
+				// times[i] = sorting.testSorting(AdvancedSort.MERGESORTLI);
+				// break;
+				// case COLLECTIONS:
+				// times[i] = sorting.testSorting(AdvancedSort.COLLECTIONS);
+				// break;
 			}
 		}
 		return new Results(times, calculateAverage(times, n > toOmit ? toOmit : 0));
@@ -283,30 +282,30 @@ public class Test
 			case MERGESORTJAVA:
 				sorter = new MergeSortJava<>();
 				break;
-			case MERGESORTITERATIVE:
-				sorter = new MergeSortIterative<>();
-				break;
-			case MERGESORTLI:
-				sorter = new MergeSortLI<>();
-				break;
-			case COLLECTIONS:
-				Collections.sort(sortedList);
-				return sortedList;
+			// case MERGESORTITERATIVE:
+			// sorter = new MergeSortIterative<>();
+			// break;
+			// case MERGESORTLI:
+			// sorter = new MergeSortLI<>();
+			// break;
+			// case COLLECTIONS:
+			// Collections.sort(sortedList);
+			// return sortedList;
 		}
 		return sorter.sort(sortedList);
 	}
 
 	public static void main(String[] args)
 	{
-		int times = 200;
-		int toOmit = 150;
-		int[] array = { 1000, 2000 };
+		int times = 40;
+		int toOmit = 20;
+		int[] array = { 2000, 1000, 2000, 5000, 10000, 15000 };
 		Test t = new Test();
 		String report = t.sorting(times, toOmit, array);
 		System.out.print(report);
+		// t.saveReport(report, "AdvancedLoop.txt");
 
-		// System.out.println(t.showTimes(100, BasicSort.BUBBLESORT,
-		// Mode.RANDOM, times, toOmit));
+		System.out.println(t.showTimes(100, AdvancedSort.QUICKSORT, Mode.RANDOM, times, toOmit));
 
 		System.out.println(sortList(10, 4, Mode.RANDOM, AdvancedSort.QUICKSORT));
 	}

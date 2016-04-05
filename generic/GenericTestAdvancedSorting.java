@@ -1,12 +1,9 @@
 package laboratorium.lista5.generic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import laboratorium.lista5.AdvancedSort;
-import laboratorium.lista5.other.MergeSortIterative;
-import laboratorium.lista5.other.MergeSortLI;
 
 public class GenericTestAdvancedSorting<T extends Comparable<? super T>>
 {
@@ -31,22 +28,22 @@ public class GenericTestAdvancedSorting<T extends Comparable<? super T>>
 			case HEAPSORT:
 				sorter = new HeapSort<>();
 				break;
-			case MERGESORTITERATIVE:
-				sorter = new MergeSortIterative<>();
-				break;
-			case MERGESORTLI:
-				sorter = new MergeSortLI<>();
-				break;
 			case MERGESORTJAVA:
 				sorter = new MergeSortJava<>();
 				break;
-			case COLLECTIONS:
-			{
-				long start = System.nanoTime();
-				Collections.sort(list);
-				long end = System.nanoTime();
-				return (end - start) * 0.000001;
-			}
+			// case MERGESORTITERATIVE:
+			// sorter = new MergeSortIterative<>();
+			// break;
+			// case MERGESORTLI:
+			// sorter = new MergeSortLI<>();
+			// break;
+			// case COLLECTIONS:
+			// {
+			// long start = System.nanoTime();
+			// Collections.sort(list);
+			// long end = System.nanoTime();
+			// return (end - start) * 0.000001;
+			// }
 		}
 		long start = System.nanoTime();
 		sorter.sort(list);

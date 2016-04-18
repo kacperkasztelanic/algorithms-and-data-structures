@@ -8,10 +8,23 @@ import java.util.Random;
 import laboratorium.lista7.binarysearch.ArraySearcher;
 import laboratorium.lista7.tree.BinarySearchTree;
 import laboratorium.lista7.tree.Iterator;
-import laboratorium.lista7.tree.Vehicle;
 
 public class Test
 {
+	public enum Search
+	{
+		SEQUENTIAL, BINARY, INTERPOLATION;
+	}
+
+	private int[] array;
+	private Random random = new Random();
+	private ArraySearcher searcher = new ArraySearcher();
+
+	public int[] getArray()
+	{
+		return array;
+	}
+
 	public static String testVehicleTree()
 	{
 		StringBuilder report = new StringBuilder();
@@ -78,65 +91,104 @@ public class Test
 		return report.toString();
 	}
 
-	public static String testBinarySearch()
+	public double calculateAverage(int[] results)
 	{
-		StringBuilder report = new StringBuilder();
-		return report.toString();
+		int sum = 0;
+		for (int i = 0; i < results.length; i++)
+			sum += results[i];
+		return ((double) sum / results.length);
 	}
 
-	public static int[] generateArray(int length)
+	public void generateArray(int length, int upperbound)
 	{
 		int[] array = new int[length];
 		Random random = new Random();
 		for (int i = 0; i < array.length; i++)
-			array[i] = random.nextInt(10000000);
+			array[i] = random.nextInt(upperbound);
 		Arrays.sort(array);
-		return array;
+		this.array = array;
 	}
 
-	public static void testSearch()
+	public double testSearch(int times, Search mode)
 	{
-		// int n = 100;
-		// int find = 90;
-		// int[] array = new int[n];
-		// for (int i = 0; i < n; i++)
-		// array[i] = 5 * i;
-		int[] array = generateArray(1000000);
-		int find = array[1819];
-		// System.out.println(array[ArraySearcher.binarySearch(array, find)]);
-		// System.out.println(array[ArraySearcher.linearSearch(array, find)]);
-		// System.out.println(array[ArraySearcher.recursiveBinarySearch(array,
-		// find)]);
-		// System.out.println(array[ArraySearcher.interpolationSearch(array,
-		// find)]);
-		long start = System.nanoTime();
-		ArraySearcher.recursiveBinarySearch(array, find);
-		long end = System.nanoTime();
-		System.out.println((end - start) / 1000);
-		start = System.nanoTime();
-		ArraySearcher.linearSearch(array, find);
-		end = System.nanoTime();
-		System.out.println((end - start) / 1000);
-		start = System.nanoTime();
-		ArraySearcher.binarySearch(array, find);
-		end = System.nanoTime();
-		System.out.println((end - start) / 1000);
-		// start = System.nanoTime();
-		// ArraySearcher.interpolationSearch(array, find);
-		// end = System.nanoTime();
-		// System.out.println(end - start);
+		int[] results = new int[times];
+		for (int i = 0; i < times; i++)
+		{
+			switch (mode)
+			{
+				case BINARY:
+					searcher.binarySearchExe1(array, array[random.nextInt(array.length - 1)]);
+					break;
+				case INTERPOLATION:
+					searcher.interpolationSearch(array, array[random.nextInt(array.length - 1)]);
+					break;
+				case SEQUENTIAL:
+					searcher.sequentialSearch(array, array[random.nextInt(array.length - 1)]);
+					break;
+			}
 
-		System.out.println(ArraySearcher.binarySearch(array, find));
-		System.out.println(ArraySearcher.linearSearch(array, find));
-		System.out.println(ArraySearcher.recursiveBinarySearch(array, find));
-		// System.out.println(ArraySearcher.interpolationSearch(array, find));
-		// System.out.println(ArraySearcher.interpolationSearch2(array, find));
+			results[i] = searcher.getCounter();
+			searcher.resetCounter();
+		}
+		return calculateAverage(results);
+	}
+
+	public String showSearchResults(int length, int upperbound, int value)
+	{
+		generateArray(length, upperbound);
+		StringBuilder report = new StringBuilder();
+		report.append(Arrays.toString(array)).append(System.lineSeparator());
+		report.append("Searching for: ").append(value).append(System.lineSeparator());
+		for (Search s : Search.values())
+			switch (s)
+			{
+				case BINARY:
+					report.append(s.toString()).append(": ").append(searcher.binarySearch(array, value))
+							.append(System.lineSeparator());
+					break;
+				case INTERPOLATION:
+					report.append(s.toString()).append(": ").append(searcher.interpolationSearch(array, value))
+							.append(System.lineSeparator());
+					break;
+				case SEQUENTIAL:
+					report.append(s.toString()).append(": ").append(searcher.sequentialSearch(array, value))
+							.append(System.lineSeparator());
+					break;
+			}
+		return report.toString();
+	}
+
+	public String showExe1Error()
+	{
+		int[] a = new int[1000];
+		for (int i = 0; i < a.length; i++)
+			a[i] = random.nextInt();
+		Arrays.sort(a);
+		// int find = a[random.nextInt(a.length)];
+		int find = a[random.nextInt(a.length)];
+		StringBuilder report = new StringBuilder();
+		report.append(Arrays.toString(a)).append(System.lineSeparator());
+		report.append("Searching for: ").append(find).append(System.lineSeparator());
+		report.append(searcher.binarySearchExe1(a, find)).append(System.lineSeparator());
+		report.append(searcher.binarySearch(a, find)).append(System.lineSeparator());
+		return report.toString();
 	}
 
 	public static void main(String[] args)
 	{
-		System.out.println(integerTestTree());
-		// System.out.println(testBinarySearch());
-		// testSearch();
+		// System.out.println(integerTestTree());
+		Test t = new Test();
+		// int times = 100;
+		// for (int i = 10; i <= 10000000; i *= 10)
+		// {
+		// t.generateArray(i, 10000000);
+		// System.out.println("Array length: " + i);
+		// System.out.println("Sequential: " + t.testSearch(times,
+		// Search.SEQUENTIAL));
+		// System.out.println("Binary: " + t.testSearch(times, Search.BINARY));
+		// System.out.println("Interpolation: " + t.testSearch(times,
+		// Search.INTERPOLATION));
+		// }
+		System.out.println(t.showSearchResults(10, 100, 5));
 	}
 }

@@ -1,4 +1,4 @@
-package laboratorium.lista7.tree;
+package laboratorium.lista7;
 
 public class Vehicle /* implements Comparable<Vehicle> */
 {

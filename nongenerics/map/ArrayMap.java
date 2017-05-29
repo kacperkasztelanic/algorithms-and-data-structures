@@ -5,7 +5,7 @@ import laboratorium.lista6.nongenerics.common.Iterator;
 
 public class ArrayMap implements Map
 {
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
+	private static final int DEFAULT_INITIAL_CAPACITY = 10;
 	private final int INITIAL_CAPACITY;
 	private MapEntry[] array;
 	private int size;
@@ -36,8 +36,7 @@ public class ArrayMap implements Map
 		if (!containsKey(key))
 		{
 			ensureCapacity(size + 1);
-			array[size] = new MapEntry(key, value);
-			size++;
+			array[size++] = new MapEntry(key, value);
 		}
 		else
 			array[indexOf(key)].setValue(value);

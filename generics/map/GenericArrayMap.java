@@ -6,9 +6,9 @@ import laboratorium.lista6.generics.map.iterators.GenericArrayMapKeyIterator;
 import laboratorium.lista6.generics.map.iterators.GenericArrayMapValueIterator;
 import laboratorium.lista6.generics.map.iterators.GenericMapIterator;
 
-public class GenericArrayMap<K, V> implements GenericMap<K, V>
+public final class GenericArrayMap<K, V> implements GenericMap<K, V>
 {
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
+	private static final int DEFAULT_INITIAL_CAPACITY = 10;
 	private final int INITIAL_CAPACITY;
 	private Object[] array;
 	private int size;
@@ -39,8 +39,7 @@ public class GenericArrayMap<K, V> implements GenericMap<K, V>
 		if (!containsKey(key))
 		{
 			ensureCapacity(size + 1);
-			array[size] = new MapEntry<>(key, value);
-			size++;
+			array[size++] = new MapEntry<>(key, value);
 		}
 		else
 			cast(indexOf(key)).setValue(value);

@@ -3,9 +3,9 @@ package laboratorium.lista6.generics.set;
 import laboratorium.lista6.generics.common.GenericArrayIterator;
 import laboratorium.lista6.generics.common.GenericIterator;
 
-public class GenericArraySet<T> implements GenericSet<T>
+public final class GenericArraySet<T> implements GenericSet<T>
 {
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
+	private static final int DEFAULT_INITIAL_CAPACITY = 10;
 	private final int INITIAL_CAPACITY;
 	private T[] array;
 	private int size;
@@ -39,8 +39,7 @@ public class GenericArraySet<T> implements GenericSet<T>
 		if (!contains(value))
 		{
 			ensureCapacity(size + 1);
-			array[size] = value;
-			size++;
+			array[size++] = value;
 		}
 	}
 

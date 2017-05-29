@@ -26,22 +26,6 @@ public class Test
 		return sb.toString();
 	}
 
-	public static String GenericSet()
-	{
-		GenericSet<String> set = new GenericArraySet<>();
-		StringBuilder sb = new StringBuilder();
-		sb.append(set.toString()).append(System.lineSeparator());
-		set.add("qwerty");
-		set.add("asdfgh");
-		set.add("qwerty");
-		sb.append(set.toString()).append(System.lineSeparator());
-		set.remove("asdfgh");
-		sb.append(set.toString()).append(System.lineSeparator());
-		set.remove("qwerty");
-		sb.append(set.toString()).append(System.lineSeparator());
-		return sb.toString();
-	}
-
 	public static String Map()
 	{
 		Map map = new ArrayMap();
@@ -55,6 +39,22 @@ public class Test
 		sb.append(map.toString()).append(System.lineSeparator());
 		map.remove("qwerty");
 		sb.append(map.toString()).append(System.lineSeparator());
+		return sb.toString();
+	}
+
+	public static String GenericSet()
+	{
+		GenericSet<String> set = new GenericArraySet<>();
+		StringBuilder sb = new StringBuilder();
+		sb.append(set.toString()).append(System.lineSeparator());
+		set.add("qwerty");
+		set.add("asdfgh");
+		set.add("qwerty");
+		sb.append(set.toString()).append(System.lineSeparator());
+		set.remove("asdfgh");
+		sb.append(set.toString()).append(System.lineSeparator());
+		set.remove("qwerty");
+		sb.append(set.toString()).append(System.lineSeparator());
 		return sb.toString();
 	}
 
@@ -76,9 +76,9 @@ public class Test
 
 	public static void main(String[] args)
 	{
-		System.out.println(Set());
+		System.out.println("Set:");
 		System.out.println(GenericSet());
-		System.out.println(Map());
+		System.out.println("Map:");
 		System.out.println(GenericMap());
 	}
 }

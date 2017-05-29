@@ -5,7 +5,7 @@ import laboratorium.lista6.nongenerics.common.Iterator;
 
 public class ArraySet implements Set
 {
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
+	private static final int DEFAULT_INITIAL_CAPACITY = 10;
 	private final int INITIAL_CAPACITY;
 	private String[] array;
 	private int size;
@@ -39,8 +39,7 @@ public class ArraySet implements Set
 		if (!contains(value))
 		{
 			ensureCapacity(size + 1);
-			array[size] = value;
-			size++;
+			array[size++] = value;
 		}
 	}
 

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import laboratorium.lista7.binarysearch.ArraySearcher;
-import laboratorium.lista7.tree.BinarySearchTree;
-import laboratorium.lista7.tree.Iterator;
+import laboratorium.lista7.bsttree.BinarySearchTree;
+import laboratorium.lista7.bsttree.Iterator;
 
 public class Test
 {
@@ -80,7 +80,7 @@ public class Test
 			it.next();
 		}
 		report.append(System.lineSeparator());
-		it = bst.iterator();
+		it = bst.inOrderIterator();
 		it.first();
 		report.append("In-Order").append(System.lineSeparator());
 		while (!it.isDone())
@@ -158,37 +158,20 @@ public class Test
 		return report.toString();
 	}
 
-	public String showExe1Error()
-	{
-		int[] a = new int[1000];
-		for (int i = 0; i < a.length; i++)
-			a[i] = random.nextInt();
-		Arrays.sort(a);
-		// int find = a[random.nextInt(a.length)];
-		int find = a[random.nextInt(a.length)];
-		StringBuilder report = new StringBuilder();
-		report.append(Arrays.toString(a)).append(System.lineSeparator());
-		report.append("Searching for: ").append(find).append(System.lineSeparator());
-		report.append(searcher.binarySearchExe1(a, find)).append(System.lineSeparator());
-		report.append(searcher.binarySearch(a, find)).append(System.lineSeparator());
-		return report.toString();
-	}
-
 	public static void main(String[] args)
 	{
-		// System.out.println(integerTestTree());
+		System.out.println(integerTestTree());
+		System.out.println(testVehicleTree());
 		Test t = new Test();
-		// int times = 100;
-		// for (int i = 10; i <= 10000000; i *= 10)
-		// {
-		// t.generateArray(i, 10000000);
-		// System.out.println("Array length: " + i);
-		// System.out.println("Sequential: " + t.testSearch(times,
-		// Search.SEQUENTIAL));
-		// System.out.println("Binary: " + t.testSearch(times, Search.BINARY));
-		// System.out.println("Interpolation: " + t.testSearch(times,
-		// Search.INTERPOLATION));
-		// }
-		System.out.println(t.showSearchResults(10, 100, 5));
+		int times = 100;
+		for (int i = 10; i <= 10000000; i *= 10)
+		{
+			t.generateArray(i, 10000000);
+			System.out.println("Array length: " + i);
+			System.out.println("Sequential: " + t.testSearch(times, Search.SEQUENTIAL));
+			System.out.println("Binary: " + t.testSearch(times, Search.BINARY));
+			System.out.println("Interpolation: " + t.testSearch(times, Search.INTERPOLATION));
+		}
+		System.out.println(t.showSearchResults(100, 10000, 5));
 	}
 }

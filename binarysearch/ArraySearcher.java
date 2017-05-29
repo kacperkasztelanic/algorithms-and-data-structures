@@ -33,7 +33,7 @@ public class ArraySearcher
 		while (lower <= upper)
 		{
 			counter++;
-			int mid = (lower + upper) / 2;
+			int mid = (lower + upper) >> 1;
 			int cmp = value - array[mid];
 			if (cmp < 0)
 				upper = mid - 1;
@@ -52,7 +52,7 @@ public class ArraySearcher
 		while (lower <= upper)
 		{
 			counter++;
-			int mid = lower + (upper - lower) / 2;
+			int mid = lower + ((upper - lower) >> 1);
 			int cmp = value - array[mid];
 			if (cmp < 0)
 				upper = mid - 1;
@@ -74,7 +74,7 @@ public class ArraySearcher
 		counter++;
 		if (lower > upper)
 			return -1;
-		int index = lower + (upper - lower) / 2;
+		int index = lower + ((upper - lower) >> 1);
 		int cmp = value - array[index];
 		if (cmp < 0)
 			return recursiveBinarySearchHelper(array, value, lower, index - 1);

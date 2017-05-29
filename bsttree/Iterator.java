@@ -1,4 +1,4 @@
-package laboratorium.lista7.tree;
+package laboratorium.lista7.bsttree;
 
 public interface Iterator<T>
 {

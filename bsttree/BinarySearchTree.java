@@ -1,4 +1,4 @@
-package laboratorium.lista7.tree;
+package laboratorium.lista7.bsttree;
 
 import java.util.Comparator;
 
@@ -123,7 +123,7 @@ public class BinarySearchTree<T>
 		}
 	}
 
-	public Iterator<T> iterator()
+	public Iterator<T> inOrderIterator()
 	{
 		return new BSTIterator<T>(this, TraversalMode.INORDER);
 	}
